@@ -13,6 +13,7 @@ RUN apk add --no-cache --virtual .build-deps \
 # Install production dependencies
 RUN apk add --no-cache \
     bash \
+    exif \
     curl \
     g++ \
     gcc \
