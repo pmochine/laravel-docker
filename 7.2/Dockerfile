@@ -13,7 +13,6 @@ RUN apk add --no-cache --virtual .build-deps \
 # Install production dependencies
 RUN apk add --no-cache \
     bash \
-    exif \
     curl \
     g++ \
     gcc \
@@ -44,6 +43,7 @@ RUN docker-php-ext-enable \
 RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install \
     curl \
+    exif \
     iconv \
     mbstring \
     pdo \
