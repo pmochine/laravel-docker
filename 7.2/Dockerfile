@@ -20,7 +20,6 @@ RUN apk add --no-cache \
     imagemagick \
     libc-dev \
     libpng-dev \
-    libicu-dev \
     make \
     mysql-client \
     nodejs \
@@ -30,7 +29,7 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     zlib-dev \
-    zlib1g-dev \
+    icu-dev \
     libzip-dev
 
 # Install PECL and PEAR extensions
@@ -42,6 +41,7 @@ RUN pecl install \
 RUN docker-php-ext-enable \
     imagick \
     xdebug
+RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install \
     curl \
@@ -56,10 +56,9 @@ RUN docker-php-ext-install \
     tokenizer \
     xml \
     zip \
-    bcmath
-# Install intl    
-RUN docker-php-ext-configure intl \
-    && docker-php-ext-install intl
+    bcmath \
+    intl
+
 
 #Install gd
 RUN docker-php-ext-configure gd \
