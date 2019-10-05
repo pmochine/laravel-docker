@@ -55,13 +55,7 @@ RUN docker-php-ext-install \
     xml \
     zip \
     bcmath
-# Install intl
-RUN apt-get update && apt-get install -y --no-install-recommends libicu-dev \
-    && docker-php-ext-configure intl \
-    && docker-php-ext-install intl \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* || true
-    
+# Install intl    
 RUN apt-get install -y zlib1g-dev libicu-dev g++ \
     && docker-php-ext-configure intl \
     && docker-php-ext-install intl
