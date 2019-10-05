@@ -29,6 +29,7 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     zlib-dev \
+    icu-dev \
     libzip-dev
 
 # Install PECL and PEAR extensions
@@ -40,6 +41,7 @@ RUN pecl install \
 RUN docker-php-ext-enable \
     imagick \
     xdebug
+RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install \
     curl \
@@ -53,9 +55,17 @@ RUN docker-php-ext-install \
     pcntl \
     tokenizer \
     xml \
-    gd \
     zip \
-    bcmath
+    bcmath \
+    intl
+
+
+#Install gd
+RUN docker-php-ext-configure gd \
+    --with-freetype-dir=/usr/include/ \
+    --with-png-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/
+RUN NPROC=$(getconf _NPROCESSORS_ONLN)&& docker-php-ext-install -j${NPROC} gd
 
 # Install composer
 ENV COMPOSER_HOME /composer
