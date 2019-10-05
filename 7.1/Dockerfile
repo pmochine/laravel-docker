@@ -20,6 +20,11 @@ RUN apk add --no-cache \
     imagemagick \
     libc-dev \
     libpng-dev \
+    freetype \
+    libpng \
+    libjpeg-turbo \
+    freetype-dev \
+    libjpeg-turbo-dev \
     make \
     mysql-client \
     nodejs \
@@ -45,8 +50,8 @@ RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install \
     curl \
-    exif \
     iconv \
+    exif \
     mbstring \
     pdo \
     pdo_mysql \
@@ -54,13 +59,12 @@ RUN docker-php-ext-install \
     pdo_sqlite \
     pcntl \
     tokenizer \
+    intl \
     xml \
     zip \
-    bcmath \
-    intl
+    bcmath
 
-
-#Install gd
+# Configure & install gd extension
 RUN docker-php-ext-configure gd \
     --with-freetype-dir=/usr/include/ \
     --with-png-dir=/usr/include/ \
