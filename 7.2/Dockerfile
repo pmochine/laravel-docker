@@ -20,6 +20,7 @@ RUN apk add --no-cache \
     imagemagick \
     libc-dev \
     libpng-dev \
+    libicu-dev \
     make \
     mysql-client \
     nodejs \
@@ -29,6 +30,7 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     zlib-dev \
+    zlib1g-dev \
     libzip-dev
 
 # Install PECL and PEAR extensions
@@ -56,8 +58,7 @@ RUN docker-php-ext-install \
     zip \
     bcmath
 # Install intl    
-RUN apt-get install -y zlib1g-dev libicu-dev g++ \
-    && docker-php-ext-configure intl \
+RUN docker-php-ext-configure intl \
     && docker-php-ext-install intl
 
 #Install gd
