@@ -32,19 +32,22 @@ RUN apk add --no-cache \
     oniguruma-dev \
     yarn \
     openssh-client \
+    pcre-dev $PHPIZE_DEPS \
     postgresql-libs \
     rsync \
-    zlib-dev
+    zlib-dev    
 
 # Install PECL and PEAR extensions
 RUN pecl install \
     imagick \
-    xdebug
+    xdebug \
+    redis
 
 # Install and enable php extensions
 RUN docker-php-ext-enable \
     imagick \
-    xdebug
+    xdebug \
+    redis.so
 
 
 # Configure php extensions
