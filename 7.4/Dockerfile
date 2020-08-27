@@ -49,6 +49,8 @@ RUN docker-php-ext-enable \
 
 # Configure php extensions
 RUN docker-php-ext-configure intl
+# Configure php extensions
+RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
 RUN docker-php-ext-install \
     bcmath \
@@ -67,11 +69,6 @@ RUN docker-php-ext-install \
     tokenizer \
     xml \
     zip
-
-# Configure & install gd extension
-RUN docker-php-ext-configure gd \
-    --with-freetype \
-    --with-jpeg 
 
 RUN NPROC=$(getconf _NPROCESSORS_ONLN)&& docker-php-ext-install -j${NPROC} gd
 
