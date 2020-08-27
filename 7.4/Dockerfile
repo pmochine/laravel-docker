@@ -52,9 +52,13 @@ RUN docker-php-ext-enable \
 RUN docker-php-ext-configure intl
 
 RUN docker-php-ext-install \
+    bcmath \
+    calendar \
     curl \
-    iconv \
     exif \
+    gd \
+    iconv \
+    intl \
     mbstring \
     pdo \
     pdo_mysql \
@@ -62,10 +66,8 @@ RUN docker-php-ext-install \
     pdo_sqlite \
     pcntl \
     tokenizer \
-    intl \
     xml \
-    zip \
-    bcmath
+    zip
 
 # Configure & install gd extension
 RUN docker-php-ext-configure gd \
