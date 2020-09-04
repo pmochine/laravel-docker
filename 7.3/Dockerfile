@@ -39,13 +39,12 @@ RUN apk add --no-cache \
 
 # Install PECL and PEAR extensions
 RUN pecl install \
-    imagick \
-    xdebug
+    imagick 
 
 # Install and enable php extensions
 RUN docker-php-ext-enable \
-    imagick \
-    xdebug
+    imagick 
+    
 RUN docker-php-ext-configure intl
 RUN docker-php-ext-configure zip --with-libzip
 RUN docker-php-ext-install \
