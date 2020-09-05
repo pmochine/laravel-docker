@@ -8,7 +8,8 @@ RUN apk add --no-cache --virtual .build-deps \
     libtool \
     libxml2-dev \
     postgresql-dev \
-    sqlite-dev
+    sqlite-dev \
+    libmemcached-libs
 
 # Install production dependencies
 RUN apk add --no-cache \
@@ -35,21 +36,25 @@ RUN apk add --no-cache \
     pcre-dev $PHPIZE_DEPS \
     postgresql-libs \
     rsync \
-    zlib-dev    
+    zlib-dev \
+    .memcached-deps \
+    libmemcached-dev \
+    cyrus-sasl-dev
 
 # Install PECL and PEAR extensions
 RUN pecl install \
-    imagick 
+    imagick \
+    memcached
     # redis Don't need this anymore
 
 # Install and enable php extensions
 RUN docker-php-ext-enable \
-    imagick 
+    imagick \
+    memcached && \
+    rm -rf /tmp/*
     # redis.so
 
 
-# Configure php extensions
-RUN docker-php-ext-configure intl
 # Configure php extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 
@@ -71,8 +76,6 @@ RUN docker-php-ext-install \
     xml \
     zip
 
-RUN NPROC=$(getconf _NPROCESSORS_ONLN)&& docker-php-ext-install -j${NPROC} gd
-
 # Install composer
 ENV COMPOSER_HOME /composer
 ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
@@ -83,7 +86,8 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 RUN composer global require "squizlabs/php_codesniffer=*"
 
 # Cleanup dev dependencies
-RUN apk del -f .build-deps
+RUN apk del -f .build-deps \
+    .memcached-deps
 
 # Setup working directory
 WORKDIR /var/www
