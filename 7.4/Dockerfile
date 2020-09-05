@@ -37,7 +37,6 @@ RUN apk add --no-cache \
     postgresql-libs \
     rsync \
     zlib-dev \
-    .memcached-deps \
     libmemcached-dev \
     cyrus-sasl-dev
 
@@ -86,8 +85,7 @@ RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/
 RUN composer global require "squizlabs/php_codesniffer=*"
 
 # Cleanup dev dependencies
-RUN apk del -f .build-deps \
-    .memcached-deps
+RUN apk del -f .build-deps
 
 # Setup working directory
 WORKDIR /var/www
