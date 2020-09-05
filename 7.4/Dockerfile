@@ -33,7 +33,7 @@ RUN apk add --no-cache \
     oniguruma-dev \
     yarn \
     openssh-client \
-    pcre-dev $PHPIZE_DEPS \
+    pcre-dev \
     postgresql-libs \
     rsync \
     zlib-dev \
