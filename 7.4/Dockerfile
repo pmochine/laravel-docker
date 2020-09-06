@@ -81,6 +81,9 @@ ENV PATH ./vendor/bin:/composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
 RUN curl -s https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin/ --filename=composer
 
+# PHP 7.4 needs much more memory...
+RUN echo 'memory_limit = 512M' >> /usr/local/etc/php/conf.d/docker-php-memlimit.ini;
+
 # Install PHP_CodeSniffer
 RUN composer global require "squizlabs/php_codesniffer=*"
 
